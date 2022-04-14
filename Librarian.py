@@ -1,11 +1,16 @@
+from distutils.file_util import write_file # im not sure if this line is actually necessary 
 import json
 from datetime import date
 
 today = date.today()
 
-newWord = input ('What new word have you read?\n')
+def libe():
+    newWord = input ('What new word have you read?\n')
+    with open('Library.json', 'w') as write_file: #Open json file, with write privelige
+        json.dump(newWord, write_file, separators = ", ")
+        myLibe = json.load(f)
+        #dict = '{ "Word" : "newWord", "Date" : "today" }'
+    
+libe()
 
-with open('Library.json', 'r') as f: #Used open function to open json file
-    personDict = json.load(f)
-
-print(personDict) # Trying this example https://www.programiz.com/python-programming/json
+print(myLibe)
