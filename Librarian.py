@@ -1,16 +1,33 @@
-from distutils.file_util import write_file # im not sure if this line is actually necessary 
 import json
 from datetime import date
 
-today = date.today()
+#Notes:
+#dictName[key] = value this appends
+#print(write_file.read()) #you can only read it once when you open it.
+#dumps dumps to a json string from a dictionary
+#File is closed automatically as 'with' block is exited.
+tempLibrary = ''
 
-def libe():
-    newWord = input ('What new word have you read?\n')
-    with open('Library.json', 'w') as write_file: #Open json file, with write privelige
-        json.dump(newWord, write_file, separators = ", ")
-        myLibe = json.load(f)
-        #dict = '{ "Word" : "newWord", "Date" : "today" }'
+#1. Open existing json file as a readable object named read_file.
+with open('Library.json', mode = 'r', encoding = 'utf8') as read_file:
+
+    #2. Convert the json file into a dictionary
+    libraryDictionary = json.loads(read_file.read())
     
-libe()
+    #3. Add items to the dictionary.
+    libraryDictionary['Word_2'] = {}
+    libraryDictionary['Word_2']['Word'] = 'Amphetamine'
+    libraryDictionary['Word_2']['Book'] = 'Blitzed'
+    libraryDictionary['Word_2']['Date'] = str(date.today())
 
-print(myLibe)
+    #4. Convert the dictionary back into a json string.
+    libraryJsonString = json.dumps(libraryDictionary)
+
+#Check what the dictionary looks like
+print(libraryJsonString)
+
+#5. Open existing json file as a writeable object named write_file.
+with open('Library.json', mode = 'w', encoding= 'utf8') as write_file:
+
+    #6. Overwrite existing data with new json string.
+    write_file.write(libraryJsonString)
